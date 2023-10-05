@@ -62,9 +62,12 @@ class App extends Component {
         const titleMatch = title.includes(newSearchText)
         const descriptionMatch = description.includes(newSearchText)
         if (titleMatch || descriptionMatch) {
-          note.doesMatchSearch = true;
-          return note;
+          note.doesMatchSearch = true
+        } else {
+          note.doesMatchSearch = false
         }
+        return note;
+        
       }
 
     });
