@@ -76,11 +76,38 @@ class App extends Component {
     });
   }
 
+    removeNote = (noteId) => {
+        const updatedNotes = this.state.notes.filter( note => {
+          if (noteId !== note.id) {
+            return note;
+          }
+        })
+          this.setState({ notes: updatedNotes})
+     
+
+      }
+    
+
+      componentDidUpdate() {
+        const stringifiedNotes = JSON.stringify(this.state.notes);
+        localStorage.setItem("savedNotes", stringifiedNotes)
+      }
+
+      componentDidMount() {
+        const stringifiedNotes = localStorage.getItem("savedNotes");
+        if (stringifiedNotes) {
+          const savedNotes = JSON.parse(stringifiedNotes);
+          this.setState({ notes: savedNotes});
+        }
+      }
+
+      
+
   render() {
     return (
       <div>
         <Header searchText={this.state.searchText} addNote={this.addNote} onType={this.onType} onSearch={this.onSearch} />
-        <NotesList notes={this.state.notes} onType={this.onType} />
+        <NotesList notes={this.state.notes} onType={this.onType} removeNote={this.removeNote} />
       </div>
     )
   }
